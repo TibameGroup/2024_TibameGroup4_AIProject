@@ -1,0 +1,128 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dairy</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename=app.config['LIFF_STATIC_FOLDER'] + '/css/recordNutrition.css') }}"
+    />
+  </head> 
+  <body onload="ShowTime()">
+    <section class="dietrecord">
+      <div class="box0"> 
+        <button id="settingsBtn" onclick="toggleUserInfo()">
+          <img class="setimg" src="https://i.imgur.com/ouzBhfz.png" alt="設定圖示">
+        </button>
+        <button id="userinfo" onclick="changeUserInfo('{{userId}}')">
+          <img class="editimg" src="https://i.imgur.com/z0G4E8i.png" alt="編輯圖示">
+        </button>
+      </div>
+      <div class="user-info">
+        <div class="info-block">姓名：{{username}}</div>
+        <div class="info-block">身高：{{height}} 公分</div>
+        <div class="info-block">體重：{{weight}} 公斤</div>
+        <div class="info-block">運動量：
+          {% if activity_level == "sedentary" %}
+            不運動
+          {% elif activity_level == "lightly_active" %}
+            一周運動1-2天
+          {% elif activity_level == "moderately_active" %}
+            一周運動2-4天
+          {% elif activity_level == "very_active" %}
+            一周運動3-5天
+          {% elif activity_level == "extra_active" %}
+            一周運動6天以上或者從事勞力工作或運動員
+          {% else %}
+            未知
+          {% endif %}
+        </div>
+        <div class="info-block">高蛋白飲食：
+          {% if workout == "yes" %}
+            是
+          {% elif workout == "no" %}
+            否
+          {% else %}
+            未知
+          {% endif %}
+        </div>
+      </div>
+      <div class="box1"> 
+        <div id="showtime"></div>
+      </div>
+      <div class="box2">
+        <div class="info-card" id="targetValue">
+          <img src="https://i.imgur.com/xAILLsJ.png" alt="目標值圖示">
+          <h5>目標值</h5>
+          <p id="info-card-num">{{target_dict["熱量"]| int }} </p>
+          <p>kcal</p>
+        </div>
+        <div class="circle" id="remainValue">
+          {% set progressPercentage = (ingestNutritionList[0] / target_dict["熱量"] * 100) | int %}
+          <!-- progress-circle {% if progressPercentage < 50 %}p{{ progressPercentage }}{% else %}{% if progressPercentage > 100 %}over100{% else %}over50{% endif %} p{{ progressPercentage }}{% endif %} -->
+          <div class="progress-circle {% if progressPercentage < 50 %}p{{ progressPercentage }}{% else %}{% if progressPercentage >= 100 %}over100{% else %}over50{% endif %} p{{ progressPercentage }}{% endif %}">
+            <span class="circle-text">
+              <p>{{exreList[0]}}</p>
+              <p>{{remainValue| int }} kcal</p>
+            </span>
+            <div class="left-half-clipper">
+              <div class="first50-bar"></div>
+              <div class="value-bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="info-card" id="ingestValue">
+          <img src="https://i.imgur.com/VpkYCRq.png" alt="已攝取圖示">
+          <h5>已攝取</h5>
+          <p id="info-card-num">{{ingestNutritionList[0]| int }}</p>
+          <p>kcal</p>
+        </div>
+      </div>
+      <div class="box3">
+        <div class="Value1">
+          <p>蛋白質</p>
+          <div class="progress-container">
+            
+            {% set numPROTEIN = ingestNutritionList[1]/target_dict['蛋白質'] %}
+            {% if numPROTEIN > 1 %} 
+            <div class="progress-bar" id="progress-over-100" style="--value: {{numPROTEIN}}; --min: 0; --max: 100;"></div>
+            {%else%} 
+            <div class="progress-bar" id="progressPROTEIN" style="--value: {{numPROTEIN}}; --min: 0; --max: 100;"></div>
+            {%endif%} 
+          </div>
+          <h5>{{exreList[1]}} {{proteinRemainValue| int }}g</h5>
+        </div>
+        <div class="Value2">
+          <p>脂肪</p>
+          <div class="progress-container">
+            {% set numTOTALFAT = ingestNutritionList[2]/target_dict['脂肪'] %}
+            {% if numTOTALFAT > 1 %} 
+            <div class="progress-bar" id="progress-over-100" style="--value: {{numTOTALFAT}}; --min: 0; --max: 100;"></div>
+            {%else%} 
+            <div class="progress-bar" id="progressTOTALFAT" style="--value: {{numTOTALFAT}}; --min: 0; --max: 100;"></div>
+            {%endif%} 
+          </div>
+          <h5>{{exreList[2]}} {{totalfatRemainValue| int }}g</h5>
+        </div>
+        <div class="Value3">
+          <p>碳水化合物</p>
+          <div class="progress-container">
+            {% set numCARBOHYDRATE = ingestNutritionList[3]/target_dict['碳水化合物'] %}
+            {% if numCARBOHYDRATE > 1 %} 
+            <div class="progress-bar" id="progress-over-100" style="--value: {{numCARBOHYDRATE}}; --min: 0; --max: 100;"></div>
+            {%else%} 
+            <div class="progress-bar" id="progressCARBOHYDRATE" style="--value: {{numCARBOHYDRATE}}; --min: 0; --max: 100;"></div>
+            {%endif%} 
+          
+          </div>
+          <h5>{{exreList[3]}} {{carbohydratetRemainValue| int }}g</h5>
+        </div>
+      </div>
+      <button id="healthDiaryBtn" onclick="healthDiary('{{ userId }}')">健康日記</button>
+    </section>
+    <img class="bottom-right-img" src="https://i.imgur.com/0S2d8G7.png" alt="groupimg">        
+    <script src="{{ url_for('static', filename=app.config['LIFF_STATIC_FOLDER'] + '/js/recordNutrition.js') }}"></script>
+    <script></script>
+  </body>
+</html>

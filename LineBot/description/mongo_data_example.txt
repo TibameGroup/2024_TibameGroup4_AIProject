@@ -1,0 +1,44 @@
+// collection: UserDatas
+{
+    "userId": "U385ed6243dc53deb349895924fed2e1f",
+    "MenuStage": {"Status": null,
+        "barcodeValue": null,
+        'HeatCalInfo': null}
+        
+    "userName": null,
+    "userGender": null,
+    "userBirthYear": null,
+    "friendShip": null,
+    "Friends": [null],
+    "userHeight": null,
+    "userWeight": null,
+    "ActivityLevel": null,
+    "highProteinDiet": null
+}
+
+// collection: dietRecord
+{
+    "userId": "U385ed6243dc53deb349895924fed2e1f",
+    "prodList":[{
+        "DATETIME": null,
+        "UNIT": null,
+        "PRODNAME": null,
+        "HEAT": null,
+        "PROTEIN": null,
+        "TOTALFAT": null,
+        "SATFAT": null,
+        "TRANSFAT": null,
+        "CARBOHYDRATE": null,
+        "SUGAR": null,
+        "SODIUM": null
+    }],
+    "dayRecords": [{
+        "DATETIME": null,
+        "HEATS": null,
+        "PROTEINS": null,
+        "TOTALFATS": null,
+        "CARBOHYDRATES": null,
+        "SUGARS": null,
+        "SODIUMS": null
+    }]
+}

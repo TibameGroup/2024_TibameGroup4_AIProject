@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上傳營養資訊...</title>
+    <style>
+        body {
+            background-color: #FBF3E4;
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #loading img {
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #image {
+            width: 50%;
+            margin-top: 10px;
+        }
+
+        #imageContent, #tableContent {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        /* 設定表格欄位寬度百分比 */
+        td:nth-child(1){
+            width: 30%;
+            text-align: left;
+        }
+
+        td:nth-child(2) {
+            width: 50%;
+        }
+
+        td:nth-child(3) {
+            width: 20%;
+        }
+
+        /* 縮短 input 元素的寬度 */
+        input[type="text"],
+        input[type="number"] {
+            width: 85%; /* 調整這裡的百分比以縮短寬度 */
+        }
+
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            color: black;
+            font-weight: bolder;
+            background-color:#D3C4E3;
+            border-radius: 27px;
+            border: 1px solid #D4EBE9;
+            cursor: pointer;
+            box-sizing: border-box;
+            margin-top: 15px;
+        }
+    </style>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+</head>
+<body>
+    <!-- <div id="loading">
+        <img src="https://i.imgur.com/0HOYFSt.gif" alt="Loading Spinner">
+    </div> -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script> 
+    <dotlottie-player  id="loading" src="https://lottie.host/4d20b398-48e1-49cc-ab5f-cba3b2e1054b/oUPGKxKRkO.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+
+    <div id="imageContent">
+        <img id="image" src="" alt="Sample Image">
+    </div>
+
+    <div id="tableContent">
+        <form>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>每份</th>
+                        <th>單位</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+            <button type="button" onclick="submitUserInfo()">儲存</button>
+        </form>
+    </div>
+
+    <script>
+        let userId = "{{userId}}";
+        $(document).ready(function () {
+                    $("#loading").show();
+
+                    $.ajax({
+                        url: '/uploadValues/get_file_content?userId=' + userId,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ "userId": userId }), // 將 userId 傳遞給伺服器
+                        success: function (data) {
+                            $("#loading").hide();
+                            $("#imageContent").show();
+                            var imageUrl = "data:image/jpeg;base64," + data.image;
+                            $("#image").attr('src', imageUrl);
+
+                            $("#tableContent").show();
+                            var tableBody = $("#tableBody");
+                            appendTableRow3(tableBody, "產品名稱", "");
+                            appendTableRow2(tableBody, "每一份量", data.G_ML_NUM, ["毫升", "公克"], true);
+                            appendTableRow(tableBody, "本包裝含", data.UNIT, "份", true); 
+                            appendTableRow(tableBody, "熱量", data.HEAT, "kcal", true);
+                            appendTableRow(tableBody, "蛋白質", data.PROTEIN, "g", true);
+                            appendTableRow(tableBody, "脂肪", data.TOTALFAT, "g", true);
+                            appendTableRow(tableBody, "飽和脂肪", data.SATFAT, "g", false);
+                            appendTableRow(tableBody, "反式脂肪", data.TRANSFAT, "g", false);
+                            appendTableRow(tableBody, "碳水化合物", data.CARBOHYDRATE, "g", true);
+                            appendTableRow(tableBody, "糖", data.SUGAR, "g", true);
+                            appendTableRow(tableBody, "鈉", data.SODIUM, "mg", true);
+                        }
+                    });
+                })
+
+        function appendTableRow(tableBody, label, value, unit, isRequired) {
+            const englishLabel = translateToEnglish(label);
+            const requiredAttribute = isRequired ? 'required' : '';
+            tableBody.append(`<tr><td>${label}</td><td><input type="number" step="0.1" style='text-align: right;' name='${englishLabel}' value='${value !== undefined ? value : ''}' ${requiredAttribute}></td><td>${unit}</td></tr>`);
+        }
+        function appendTableRow2(tableBody, label, value, units, isRequired) {
+            const englishLabel = translateToEnglish(label);
+            const requiredAttribute = isRequired ? 'required' : '';
+            const unitOptions = units.map(unit => `<option value="${unit}">${unit}</option>`).join('');
+            tableBody.append(`<tr><td>${label}</td><td><input type="number" step="0.1" style='text-align: right;' name='${englishLabel}' value='${value !== undefined ? value : ''}' ${requiredAttribute}></td><td><select name="G_ML">${unitOptions}</select></td></tr>`);
+        }
+
+        function appendTableRow3(tableBody, label, value) {
+            const englishLabel = translateToEnglish(label);
+            const requiredAttribute = 'required';
+            tableBody.append(`<tr><td>${label}</td><td><input type="text" maxlength="30" style='text-align: right;' name='${englishLabel}' value='${value !== undefined ? value : ''}'${requiredAttribute}></td></tr>`);
+        }
+        function translateToEnglish(chineseLabel) {
+            switch (chineseLabel) {
+                case '產品名稱':
+                    return 'PRODNAME';
+                case '每一份量':
+                    return 'G_ML_NUM';
+                case '本包裝含':
+                    return 'UNIT';
+                case '熱量':
+                    return 'HEAT';
+                case '蛋白質':
+                    return 'PROTEIN';
+                case '脂肪':
+                    return 'TOTALFAT';
+                case '飽和脂肪':
+                    return 'SATFAT';
+                case '反式脂肪':
+                    return 'TRANSFAT';
+                case '碳水化合物':
+                    return 'CARBOHYDRATE';
+                case '糖':
+                    return 'SUGAR';
+                case '鈉':
+                    return 'SODIUM';
+                default:
+                    return chineseLabel;
+            }
+        }
+
+        async function submitUserInfo() {
+            try {
+                if (validateForm()) {
+                    await sendUserInfoToBackend();
+                } else {
+                    Swal.fire({
+                        html: '請確保您已填寫所有必要的資訊，<br>並確認營養標籤僅包含數字。',
+                        icon: 'info',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '返回',
+                        allowEscapeKey: false,  // 禁用 Esc 鍵關閉對話框
+                        allowOutsideClick: false  // 禁用點擊對話框外部關閉對話框
+                    });
+                }
+            } catch (error) {
+                console.log("Error getting profile:", error);
+            }
+        }
+        function isValidNumberInput(inputValue) {
+            const regex = /^\d{1,5}(\.\d)?$/;
+            return regex.test(inputValue);
+        }
+        function validateForm() {
+            let isValid = true;
+            // 遍歷所有標記為 required 的 input 元素
+            $("#tableBody input[required]").each(function () {
+                const inputValue = $(this).val();
+                const inputName = $(this).attr("name");
+
+                // 檢查是否為空或是 NaN，並且不是產品名稱
+                if (inputName !== "PRODNAME" && (!inputValue || isNaN(inputValue) || !isValidNumberInput(inputValue))) {
+                    isValid = false;
+                    return false; // 結束迴圈
+                }
+            });
+            return isValid;
+        }
+
+        async function sendUserInfoToBackend() {
+            try {
+                var formData = {};
+                $("#tableBody input").each(function() {
+                    formData[$(this).attr("name")] = $(this).val();
+                });
+
+                // 處理 select 元素
+                $("#tableBody select").each(function() {
+                    const selectNameWithUnit = $(this).attr("name");
+                    const selectValue = $(this).val();
+                    formData[selectNameWithUnit] = selectValue;
+                });
+                
+                const response = await fetch(
+                    "/uploadValues/nutritionValues?userId=" + userId, 
+                    {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    $("#imageContent").hide();
+                    $("#tableContent").hide();
+                    Swal.fire({
+                        title: '成功',
+                        text: '產品營養表已上傳！',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonText: '確認',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // 關閉當前窗口
+                            window.close();
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('錯誤:', error);
+                Swal.fire({
+                    title: '錯誤',
+                    text: '提交失敗，請稍後重試！',
+                    icon: 'error',
+                });
+            }
+        }
+    </script>
+    
+</body>
+</html>

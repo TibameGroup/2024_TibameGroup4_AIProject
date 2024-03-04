@@ -1,0 +1,7 @@
+Flask
+opencv-python 
+numpy 
+requests 
+Werkzeug 
+ultralytics 
+google-cloud-vision

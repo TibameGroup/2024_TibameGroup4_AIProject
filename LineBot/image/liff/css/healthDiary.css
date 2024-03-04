@@ -1,0 +1,256 @@
+/* 全局樣式 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #FFF6E9;
+  margin: 0;
+  padding: 0;
+}
+
+/* 頁頂區域 */
+header {
+  position: fixed; /* 固定位置 */
+  top: 0; /* 與頁面頂部的距離 */
+  left: 0; /* 與頁面左側的距離 */
+  width: 100%; /* 橫向擴展至整個視窗寬度 */
+  z-index: 1000; /* 設定堆疊順序，確保在其他元素之上 */
+  background-color: #BBE2EC;
+  color: #666;
+  padding: 10px;
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 按鈕樣式 */
+#goHome {
+  position: absolute;
+  top: 15px; /* 上方邊距 */
+  left: 15px; /* 左方邊距 */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#goHome img {
+  width: 30px; /* 圖片寬度 */
+  height: 30px; /* 圖片高度 */
+}
+
+/* 標題樣式 */
+h2 {
+  margin: 0;
+  margin-top: 5px; /* 清除標題的默認邊距 */
+  text-align: center; /* 將標題文字置中 */
+}
+
+.health-diary {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 水平居中对齐 */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto; /* 將左邊距設為 auto，將其餘空間放在右側 */
+  margin-right: auto; /* 將右邊距設為 auto，將其餘空間放在左側 */
+}
+
+#showtime,
+#dateInput {
+  margin: 0;
+}
+
+#showtime {
+  font-size: 15px; /* 文字大小 */
+  color: #666; /* 文字顏色 */
+}
+
+#dateInput {
+  width: 30px; /* 設定寬度 */
+  height: 30px; /* 設定高度 */
+  padding: 5px; /* 設定內邊距 */
+  margin-left: 10px;
+  color: #FFF6E9;
+  border: 1px solid #ccc; /* 設定邊框 */
+  border-radius: 5px; /* 設定圓角 */
+  background-color: #FFF6E9; /* 設定內部背景顏色 */
+}
+
+.date-input-container {
+  position: relative;
+}
+
+#dateInput {
+  padding-right: 25px; 
+}
+
+.date-icon {
+  position: absolute;
+  top: 50%;
+  right: 5px; 
+  transform: translateY(-50%);
+  pointer-events: none; 
+}
+
+.dayofweek {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 水平居中對齊 */
+  width: 100%; /* 繼承父元素的寬度 */
+}
+
+.dayofweek ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.dayofweek li {
+  margin: 0 10px; /* 左右間距，可根據需要調整 */
+}
+
+.dayofweek a {
+  text-decoration: none; /* 移除超連結下劃線 */
+  color: #333; /* 文字顏色 */
+  font-weight: bold; /* 粗體字體 */
+  font-size: 16px; /* 字體大小，可根據需要調整 */
+  padding: 5px 5px; /* 內邊距，可根據需要調整 */
+  transition: color 0.3s, background-color 0.3s, border 0.3s; /* 添加過渡效果 */
+}
+
+.dayofweek a:hover {
+  color: #fff; /* 滑鼠懸停時的文字顏色 */
+  background-color: #8CB9BD; /* 滑鼠懸停時的背景顏色 */
+  border-radius: 10px; /* 圓角形狀，根據需要調整 */
+}
+
+
+/* 主頁 */
+main {
+  margin-top: 140px; /* 這裡的數值應該是 header 的高度 + 10px (上下 padding) */
+}
+
+#content {
+  width: 80%; /* 寬度擴展至 100% */
+  margin-left: 10%; /* 左邊距為 (100% - 80%) / 2 */
+  margin-right: 10%; /* 右邊距為 (100% - 80%) / 2 */
+}
+
+.level {
+  width: 100%;
+  margin: 0;
+  border: 1px solid #ccc;
+  padding: 5px; /* 添加内边距，使表格内容远离边框 */
+  border-radius: 20px; /* 圆角半径，可以根据需要调整 */
+  margin-right: 20px;
+}
+
+table {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  margin-top: -10px;
+}
+
+table img {
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+table th, table td {
+  padding: 5px;
+}
+
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: #dbdcd0;
+  border-radius: 10px;
+  margin: 5px;
+  display: flex;
+  align-items: center; /* 垂直置中 */
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 10px;
+  width: calc(var(--value) * 100%);
+  background-color: #B7E5B4; /* 修改顏色 */
+}
+
+/* #progress-0 {
+  background-color: #F4F27E;
+}
+
+#progress-1 {
+  background-color: #AC87C5;
+}
+
+#progress-2{
+  background-color: #6495ED;
+}
+
+#progress-3 {
+  background-color: #edbc64;
+}
+
+#progress-4{
+  background-color: #B7E5B4;
+}
+
+#progress-5{
+  background-color: #FF9BD2;
+} */
+
+#progress-over-100 {
+  background-color: #f9816a;
+}
+
+.total-amount p {
+  margin: 5px; /* 底部間距，根據需要調整 */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.total-amount progress {
+  margin: 5px; /* 進度條之間的間距，根據需要調整 */
+  
+}
+
+.dietrecord h5 {
+  font-size: 14px; /* 字體大小，可根據需要調整 */
+  color: #333; /* 標題文字顏色 */
+  margin: 0;
+  /* margin-top: 20px; */
+}
+
+.breakfast, .lunch, .dinner, .no-record {
+  background-color: #FFF6E9; /* 背景顏色 */
+  margin-top: 10px; /* 上方邊距 */
+  padding: 10px; /* 內邊距 */
+  border-radius: 5px; /* 圓角 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border: 1px solid #40A2E3; 
+  border-radius: 15px; /* 設定圓角 */
+}
+
+.breakfast .left img,
+.lunch .left img,
+.dinner .left img {
+  width: 50px;
+  height: auto;
+}
+
+.breakfast .right,
+.lunch .right,
+.dinner .right {
+  flex-basis: 90%; 
+  text-align: left;
+  padding-left: 10px;
+}

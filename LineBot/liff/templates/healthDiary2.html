@@ -1,0 +1,136 @@
+<section class="level">
+  <table>
+    <tr>
+      <th><img src="https://i.ibb.co/kx8CM6q/level-a.png" alt="A" /></th>
+      <th><img src="https://i.ibb.co/NTKVpg7/level-b.png" alt="B" /></th>
+      <th><img src="https://i.ibb.co/NS2PkM5/level-c.png" alt="C" /></th>
+      <th><img src="https://i.ibb.co/XXrKZ8R/level-d.png" alt="D" /></th>
+      <th><img src="https://i.ibb.co/jMS7pFX/level-e.png" alt="E" /></th>
+    </tr>
+    <tr>
+      <td>{{rank_dict["A"]}}</td>
+      <td>{{rank_dict["B"]}}</td>
+      <td>{{rank_dict["C"]}}</td>
+      <td>{{rank_dict["D"]}}</td>
+      <td>{{rank_dict["E"]}}</td>
+    </tr>
+  </table>
+</section>
+
+<section class="total-amount">
+  <p style="float: right">累計/目標(單位)</p>
+  <br />
+  {% for i in range(nutritionList|length) %}
+  <div style="clear: both"></div>
+  <p style="float: left">{{nutritionList[i]}}</p>
+  <p style="float: right">
+    {{ingestNutritionList[i]}}/{{target_dict[i]}} 
+    {% if i==0 %}
+     (kcal)
+    {% elif i==5 %}
+     (mg)
+    {%else%} 
+     (g)
+    {%endif%}
+  </p>
+  <div style="clear: both"></div>
+  <div class="progress-container">
+    {% set num = ingestNutritionList[i]/target_dict[i] %}
+    {% if num > 1 %}
+    <div class="progress-bar" id="progress-over-100" style="--value: {{ num }}; --min: 0; --max: 100;"></div>
+    {%else%} 
+    <div class="progress-bar" id="progress-{{i}}" style="--value: {{ num }}; --min: 0; --max: 100;"></div>
+    {%endif%}
+  </div>
+  {% endfor %}
+</section>
+
+<section class="dietrecord">
+  <h4>Diary</h4>
+  {% if dietRecordDict["早餐"] %}
+  <h5>早餐</h5>
+  {% for record in dietRecordDict["早餐"]%}
+  <div class="breakfast">
+    <div class="left">
+      {% if record["LEVEL"] == "A" %}
+          <img src="https://i.ibb.co/kx8CM6q/level-a.png" alt="A" />
+      {% elif record["LEVEL"] == "B" %}
+          <img src="https://i.ibb.co/NTKVpg7/level-b.png" alt="B" />
+      {% elif record["LEVEL"] == "C" %}
+          <img src="https://i.ibb.co/NS2PkM5/level-c.png" alt="C" />
+      {% elif record["LEVEL"] == "D" %}
+          <img src="https://i.ibb.co/XXrKZ8R/level-d.png" alt="D" />
+      {% elif record["LEVEL"] == "E" %}
+          <img src="https://i.ibb.co/jMS7pFX/level-e.png" alt="E" />
+      {%else%} 
+          <img src="https://i.ibb.co/rvbpsCT/level-f.png" alt="F" />
+      {% endif %}
+    </div>
+    <div class="right">
+      <p>{{record["PRODNAME"]}}</p>
+      <p>
+        份數：{{record["UNIT"]}} &emsp;熱量：{{(record["HEAT"]|float * record["UNIT"]|float) | int }}大卡
+      </p>
+    </div>
+  </div>
+  {% endfor%}{% endif %} {% if dietRecordDict["午餐"] %}
+  <h5>午餐</h5> 
+  {% for record in dietRecordDict["午餐"]%}
+  <div class="lunch">
+    <div class="left">
+      {% if record["LEVEL"] == "A" %}
+          <img src="https://i.ibb.co/kx8CM6q/level-a.png" alt="A" />
+      {% elif record["LEVEL"] == "B" %}
+          <img src="https://i.ibb.co/NTKVpg7/level-b.png" alt="B" />
+      {% elif record["LEVEL"] == "C" %}
+          <img src="https://i.ibb.co/NS2PkM5/level-c.png" alt="C" />
+      {% elif record["LEVEL"] == "D" %}
+          <img src="https://i.ibb.co/XXrKZ8R/level-d.png" alt="D" />
+      {% elif record["LEVEL"] == "E" %}
+          <img src="https://i.ibb.co/jMS7pFX/level-e.png" alt="E" />
+      {%else%} 
+          <img src="https://i.ibb.co/rvbpsCT/level-f.png" alt="F" />
+      {% endif %}
+    </div>
+    <div class="right">
+        <p>{{record["PRODNAME"]}}</p>
+        <p>
+            份數：{{record["UNIT"]}} &emsp;熱量：{{ (record["HEAT"]|float * record["UNIT"]|float) | int }}大卡
+        </p>
+    </div>
+  </div>
+
+  {% endfor%}{% endif %} {% if dietRecordDict["晚餐"] %}
+  <h5>晚餐</h5>
+  {% for record in dietRecordDict["晚餐"]%}
+  <div class="dinner">
+    <div class="left">
+      {% if record["LEVEL"] == "A" %}
+          <img src="https://i.ibb.co/kx8CM6q/level-a.png" alt="A" />
+      {% elif record["LEVEL"] == "B" %}
+          <img src="https://i.ibb.co/NTKVpg7/level-b.png" alt="B" />
+      {% elif record["LEVEL"] == "C" %}
+          <img src="https://i.ibb.co/NS2PkM5/level-c.png" alt="C" />
+      {% elif record["LEVEL"] == "D" %}
+          <img src="https://i.ibb.co/XXrKZ8R/level-d.png" alt="D" />
+      {% elif record["LEVEL"] == "E" %}
+          <img src="https://i.ibb.co/jMS7pFX/level-e.png" alt="E" />
+      {%else%} 
+          <img src="https://i.ibb.co/rvbpsCT/level-f.png" alt="F" />
+      {% endif %}
+    </div>
+    <div class="right">
+      <p>{{record["PRODNAME"]}}</p>
+      <p>
+        份數：{{record["UNIT"]}} &emsp;熱量：{{
+        (record["HEAT"]|float * record["UNIT"]|float) | int }}大卡
+      </p>
+    </div>
+  </div>
+  {% endfor%}{% endif %}{% if not dietRecordDict["早餐"] and not
+  dietRecordDict["午餐"] and not dietRecordDict["晚餐"]%}
+  <div class="no-record">
+    <p>無飲食紀錄</p>
+  </div>
+  {% endif %}
+</section>

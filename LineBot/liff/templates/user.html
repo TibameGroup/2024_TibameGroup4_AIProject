@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用者基本資訊填寫</title>
+    <style>
+      body {
+        background-color: #d3c4e3;
+        font-family: "Arial", sans-serif;
+        margin: 20px;
+      }
+
+      table {
+        width: 100%;
+        max-width: 400px;
+        margin: auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2; /* 欄位顏色 */
+        min-width: 120px; /* 或者設定其他你想要的寬度 */
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+
+      /* 未選中狀態的樣式 */
+      input[type="radio"] {
+        margin-right: 5px; /* 調整右邊距，以在每個選項之間留出一些空間 */
+      }
+
+      /* 選中狀態的樣式 */
+      input[type="radio"]:checked {
+        outline: none; /* 去除選中時的默認輪廓線（可根據需要調整） */
+        border-color: #3498db; /* 選中時的邊框顏色 */
+        background-color: #3498db; /* 選中時的背景顏色 */
+        color: #fff; /* 選中時的文字顏色 */
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        color: black;
+        font-weight: bolder;
+        background-color: #fff275;
+        border-radius: 27px;
+        border: 1px solid #d4ebe9;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-top: 15px;
+      }
+
+      #selectedInfo {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <table>
+        <tr>
+          <th>姓名</th>
+          <td>
+            <input type="text" class="userName" name="userName" value="{{
+              userinfo[0]['userName'] if userinfo and userinfo[0] and 'userName' in userinfo[0] else '' | safe }}" />
+          
+          </td>
+        </tr>
+        <tr>
+          <th>性別</th>
+          <td>
+            <div>
+              <label>
+                <input type="radio" class="userGender" name="userGender"
+                value="male" {% if userinfo and userinfo[0] and 
+                  userinfo[0]['userGender'] == "male" %} checked {% endif %} />
+
+                男性
+              </label>
+              <label>
+                <input type="radio" class="userGender" name="userGender"
+                value="female" {% if userinfo and userinfo[0] and 
+                  userinfo[0]['userGender'] == "female" %} checked {% endif %} />
+                女性
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>出生年</th>
+          <td>
+            <select
+              name="userBirthYear"
+              class="userBirthYear"
+              required
+              id="selectBirthYear"
+            ></select>
+          </td>
+        </tr>
+        <tr>
+          <th>身高</th>
+          <td>
+            <select name="userHeight" class="userHeight" required></select>
+          </td>
+        </tr>
+        <tr>
+          <th>體重</th>
+          <td>
+            <select name="userWeight" class="userWeight" required></select>
+          </td>
+        </tr>
+        <tr>
+          <th>運動量</th>
+          <td>
+            <select name="activityLevel" class="activityLevel" required>
+              <option selected></option>
+              <option value="sedentary">不運動</option>
+              <option value="lightly_active">一周運動1-2天</option>
+              <option value="moderately_active">一周運動2-4天</option>
+              <option value="very_active">一周運動3-5天</option>
+              <option value="extra_active">
+                一周運動6天以上或者從事勞力工作或運動員
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>是否高蛋白飲食</th>
+          <td>
+            <div id="proteinDietOptions">
+              <label>
+                <input type="radio" class="highProteinDiet" value="yes"
+                name="highProteinDiet" {% if userinfo and userinfo[0] and userinfo[0]['highProteinDiet'] == "yes" %} checked {% endif %} />
+                是
+              </label>
+              <label>
+                <input type="radio" class="highProteinDiet" value="no"
+                name="highProteinDiet" {% if userinfo and userinfo[0] and userinfo[0]['highProteinDiet'] == "no" %} checked {% endif %} /> 
+                否
+              </label>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <button type="button" onclick="submitUserInfo('{{userId}}')">儲存</button>
+    </form>
+    <div id="selectedInfo"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let heightSelected="{{userinfo[0]["userHeight"] if 'userHeight' in userinfo[0] else '' }}";
+        let birthYearSelected="{{userinfo[0]["userBirthYear"] if 'userBirthYear' in userinfo[0] else '' }}";
+        let weightSelected="{{userinfo[0]["userWeight"] if 'userWeight' in userinfo[0] else '' }}";
+        let activitySelected="{{ userinfo[0]["activityLevel"] if 'activityLevel' in userinfo[0] else ''}}";
+        document.addEventListener("DOMContentLoaded", function () {
+          // 初始化出生年下拉選單
+          let selectBirthYear = document.getElementById("selectBirthYear");
+          initializeYearDropdown(selectBirthYear, 1900, new Date().getFullYear(),birthYearSelected);
+
+          // 初始化身高下拉選單
+          let userHeightSelect = document.querySelector(".userHeight");
+          initializeRangeDropdown(userHeightSelect, 200, 30,heightSelected);
+
+          // 初始化體重下拉選單
+          let userWeightSelect = document.querySelector(".userWeight");
+          initializeRangeDropdown(userWeightSelect, 1, 300, weightSelected,false);
+          let activityLevelSelect = document.querySelector(".activityLevel");
+          initializeActivitySelect(activityLevelSelect,activitySelected)
+        });
+
+
+        function initializeActivitySelect(selectElement, activitySelected) {
+          if (activitySelected === " ") {
+            return;
+        }
+          const options = selectElement.options;
+          for (let i = 0; i < options.length; i++) {
+              const option = options[i];
+              if (option.value === activitySelected) {
+                  option.selected = true;
+                  break; // 一旦找到匹配的选项，就停止循环
+              }
+          }
+      }
+
+
+        function initializeYearDropdown(selectElement, startYear, endYear,birthYearSelected) {
+
+          for (let i = endYear; i >= startYear; i--) {
+            var option = createOption(i, i + " 年");
+            if (i == parseInt(birthYearSelected)) {
+              option.selected = true;
+              option.setAttribute("selected", "selected");
+            }
+          selectElement.add(option);
+          }
+          if (birthYearSelected=="") {
+            selectElement.value=""
+          }
+        }
+
+        function initializeRangeDropdown(
+          selectElement,
+          start,
+          end,
+          heightOrWeightSelected,
+          ascending = true
+        ) {
+          // 設定步進值
+          var step = ascending ? -1 : 1;
+          for (let i = start; ascending ? i >= end : i <= end; i += step) {
+            let option = createOption(
+              i,i +" " +(selectElement.classList.contains("userHeight") ? "公分" : "公斤"));
+              if (i == parseInt(heightOrWeightSelected)) {
+                option.selected = true;
+                option.setAttribute("selected", "selected");
+              }
+            selectElement.add(option);
+            }
+            if (heightOrWeightSelected=="") {
+              selectElement.value=""
+            }
+        }
+
+        function createOption(value, text) {
+          var option = document.createElement("option");
+          option.value = value;
+          option.text = text;
+          return option;
+        }
+
+        function translateActivityLevel(activityLevel) {
+          switch (activityLevel) {
+            case "sedentary":
+              return "不運動";
+            case "lightly_active":
+              return "一周運動1-2天";
+            case "moderately_active":
+              return "一周運動2-4天";
+            case "very_active":
+              return "一周運動3-5天";
+            case "extra_active":
+              return "一周運動6天以上或者從事勞力工作或運動員";
+            default:
+              return "";
+          }
+        }
+
+        function showAlert(
+          userId,
+          userName,
+          userGenderElement,
+          highProteinDietElement,
+          userHeight,
+          userWeight,
+          userBirthYear,
+          activityLevel
+        ) {
+          if (
+            userGenderElement !== null &&
+            userHeight > 0 &&
+            userWeight > 0 &&
+            highProteinDietElement !== null &&
+            userBirthYear !== "" &&
+            activityLevel !== "" &&
+            userName !== ""
+          ) {
+            const userGender = userGenderElement.value;
+            const activityLevelText = translateActivityLevel(activityLevel);
+            const highProteinDiet = highProteinDietElement.value;
+            const confirmationMessage = `
+                    性別: ${userGender === "female" ? "女性" : "男性"}<br>
+                    身高: ${userHeight} 公分<br>
+                    體重: ${userWeight} 公斤<br>
+                    運動量: ${activityLevelText}<br>
+                    高蛋白飲食: ${highProteinDiet === "yes" ? "是" : "否"}
+                `;
+
+            Swal.fire({
+              title: "確認訊息",
+              html: confirmationMessage,
+              icon: "info",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "確定",
+              cancelButtonText: "取消",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                sendUserInfoToBackend({
+                  userId,
+                  userName,
+                  userGender,
+                  userBirthYear,
+                  userHeight,
+                  userWeight,
+                  activityLevel,
+                  highProteinDiet,
+                });
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "請完整填寫",
+              icon: "info",
+              showCancelButton: false,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "返回",
+            });
+          }
+        }
+
+        function submitUserInfo(userId) {
+          const userName = document.querySelector(".userName").value;
+          const userGenderElement = document.querySelector(".userGender:checked");
+          const highProteinDietElement = document.querySelector(
+            ".highProteinDiet:checked"
+          );
+          const userHeight = document.querySelector(".userHeight").value;
+          const userWeight = document.querySelector(".userWeight").value;
+          const userBirthYear = document.querySelector(".userBirthYear").value;
+          const activityLevel = document.querySelector(".activityLevel").value;
+          showAlert(
+            userId,
+            userName,
+            userGenderElement,
+            highProteinDietElement,
+            userHeight,
+            userWeight,
+            userBirthYear,
+            activityLevel
+          );
+        }
+
+        async function sendUserInfoToBackend(userInfo) {
+          try {
+            const response = await fetch(
+              "/diary/userinfo?userId=" + userInfo["userId"],
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userInfo),
+              }
+            );
+
+            if (response.ok) {
+              Swal.fire({
+                title: "成功",
+                text: "使用者資料已上傳！",
+                icon: "success",
+              }).then(() => {
+                window.location.href =
+                  "/diary/?liff.state=/diary?userId=" + userInfo["userId"];
+                // 在 Swal.confirm 後呼叫發送訊息的函數
+              });
+            } else {
+              Swal.fire({
+                title: "錯誤",
+                text: "提交失敗，請稍後重試！",
+                icon: "error",
+              });
+            }
+          } catch (error) {
+            console.error("錯誤:", error);
+            Swal.fire({
+              title: "錯誤",
+              text: "提交失敗，請稍後重試！",
+              icon: "error",
+            });
+          }
+        }
+    </script>
+  </body>
+</html>

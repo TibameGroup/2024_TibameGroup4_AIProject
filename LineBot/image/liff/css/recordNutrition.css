@@ -1,0 +1,427 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+.box3 p {
+    font-size: 16px; 
+}
+
+h5 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: antiquewhite;
+    /* background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%); */
+}
+
+.dietrecord {
+    position: relative;
+    max-width: 100%;
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    /* background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%); */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 設定顯示使用者資料按鈕 */
+.user-info {
+    background-color: #fdf6ee;
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 40px;
+    border: 1px solid #fdf6ee;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}  
+ 
+
+.info-block {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    margin-bottom: 10px; 
+}
+
+
+#userinfo {
+    display: none;
+}
+
+.editimg,
+.setimg {
+    width: 30px;
+    height: 30px;
+}
+
+button#settingsBtn,
+button#userinfo {
+    border: none !important;
+    outline: none !important;
+    background: none !important;
+    padding: 0 !important;
+    cursor: pointer;
+}
+
+.box0 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-bottom: 20px;
+  }
+
+button#userinfo img.editimg,
+button#userinfo img.setimg {
+    border: none !important;
+    outline: none !important;
+}
+
+/* 顯示日期 */
+.box1 {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    margin-bottom: 20px;
+  }
+
+/* 顯示目標值與已攝取 */
+.box2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; /* 避免內容超出並換行 */
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px; 
+}
+
+.info-card {
+    text-align: center;
+    border: 1px solid #ffffff;  
+    /* 添加邊框 */
+    border-radius: 5px; 
+    /* 可選，使邊框圓角 */
+}
+
+.info-card img {
+    width: 30px;
+    height: 30px;
+    /* margin-bottom: 10px; */
+}
+
+.targetValue, .remainValue, .ingestValue {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    /* margin-bottom: 10px; */
+    /* border: 1px solid #ccc; */
+    /* border-radius: 5px; */
+}  
+
+#info-card-num {
+    width: 50px; /* 請根據需要調整百分比 */
+    margin: 0 auto; /* 將元素水平置中 */
+}
+
+/* 蛋白質 脂肪 碳水 info */
+.box3 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 進度條樣式修改 */
+.Value1, .Value2, .Value3 {
+    width: 30%;
+    margin: 0 2px; /* 調整邊界 */
+    text-align: center; /* 文字置中 */
+    /* border: 1px solid #ccc;  */
+    /* 添加邊框 */
+    /* border-radius: 5px;  */
+    /* 可選，使邊框圓角 */
+    box-sizing: border-box; /* 確保邊界和內容尺寸不會增加盒子尺寸 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 水平置中 */
+}
+
+.progress-container {
+    width: 80%;
+    height: 10px;
+    background-color: #F2E9E1;
+    border-radius: 10px;
+    margin: 5px;
+    display: flex;
+    align-items: center; /* 垂直置中 */
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: 10px;
+    width: calc(var(--value) * 100%);
+    background-color: green; /* 修改顏色 */
+}
+
+#progressPROTEIN {
+    background-color: #AC87C5;
+}
+
+#progressTOTALFAT {
+    background-color: #6495ED;
+}
+
+#progressCARBOHYDRATE{
+    background-color: #edbc64;
+}
+
+#progress-over-100 {
+    background-color: #f9816a;
+}
+
+
+/* 健康日記按鈕 */
+#healthDiaryBtn {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 30px; /* 調整按鈕內邊距 */
+    display: inline-block;
+    border-radius: 5px; /* 調整圓角大小 */
+    transition: all .2s;
+    cursor: pointer;
+    background-color: #f9816a;
+    color: white;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
+    line-height: 1.25;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto; /* 水平置中 */
+    display: flex; /* 可以使用 flexbox 進行垂直置中 */
+    align-items: center; /* 垂直置中 */
+    justify-content: center; /* 垂直置中 */
+}
+
+.bottom-right-img {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    margin: 10px;
+}
+
+
+/* circular-progress-bar */
+/* 圓形進度條的基本樣式 */
+.progress-circle {
+    font-size: 20px;
+    margin: 20px;
+    position: relative; /* so that children can be absolutely positioned */
+    padding: 0;
+    width: 8em;
+    height: 8em;
+    background-color: #F2E9E1; 
+    border-radius: 50%;
+    line-height: 8em;
+ }
+ 
+ .progress-circle:after{
+     border: none;
+     position: absolute;
+     top: 0.8em;
+     left: 0.8em;
+     text-align: center;
+     display: block;
+     border-radius: 50%;
+     width: 6.4em;
+     height: 6.4em;
+     background-color: white;
+     content: " ";
+ }
+ /* Text inside the control */
+ .progress-circle span {
+     position: absolute;
+     line-height: 8em;
+     width: 8em;
+     text-align: center;
+     display: block;
+     color: #1c142d;
+     z-index: 2;
+ }
+
+ .progress-circle .circle-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    line-height: 1.5; /* 調整行高，根據需要進行調整 */
+    font-weight: bold;
+}
+
+ .left-half-clipper { 
+    /* a round circle */
+    border-radius: 50%;
+    width: 8em;
+    height: 8em;
+    position: absolute; /* needed for clipping */
+    clip: rect(0, 8em, 8em, 4em); /* clips the whole left half*/ 
+ }
+ /* when p>50, don't clip left half*/
+ .progress-circle.over50 .left-half-clipper {
+    clip: rect(auto,auto,auto,auto);
+ }
+
+ .value-bar {
+    /*This is an overlayed square, that is made round with the border radius,
+    then it is cut to display only the left half, then rotated clockwise
+    to escape the outer clipping path.*/ 
+    position: absolute; /*needed for clipping*/
+    clip: rect(0, 4em, 8em, 0);
+    width: 8em;
+    height: 8em;
+    border-radius: 50%;
+    border: 1em solid #B7E5B4; /*The border is 0.35 but making it larger removes visual artifacts */
+    /*background-color: #4D642D;*/ /* for debug */
+    box-sizing: border-box;
+   
+ }
+ /* Progress bar filling the whole right half for values above 50% */
+ .progress-circle.over50 .first50-bar {
+    /*Progress bar for the first 50%, filling the whole right half*/
+    position: absolute; /*needed for clipping*/
+    clip: rect(0, 8em, 8em, 4em);
+    background-color: #B7E5B4;
+    border-radius: 50%;
+    width: 8em;
+    height: 8em;
+ }
+ .progress-circle:not(.over50) .first50-bar{ display: none; }
+ 
+ /* 超過100時修改顏色為紅色 */
+ .progress-circle.over100 {
+    background-color: #f9816a; 
+  }
+ 
+ /* Progress bar rotation position */
+ .progress-circle.p0 .value-bar { display: none; }
+ .progress-circle.p1 .value-bar { transform: rotate(4deg); }
+ .progress-circle.p2 .value-bar { transform: rotate(7deg); }
+ .progress-circle.p3 .value-bar { transform: rotate(11deg); }
+ .progress-circle.p4 .value-bar { transform: rotate(14deg); }
+ .progress-circle.p5 .value-bar { transform: rotate(18deg); }
+ .progress-circle.p6 .value-bar { transform: rotate(22deg); }
+ .progress-circle.p7 .value-bar { transform: rotate(25deg); }
+ .progress-circle.p8 .value-bar { transform: rotate(29deg); }
+ .progress-circle.p9 .value-bar { transform: rotate(32deg); }
+ .progress-circle.p10 .value-bar { transform: rotate(36deg); }
+ .progress-circle.p11 .value-bar { transform: rotate(40deg); }
+ .progress-circle.p12 .value-bar { transform: rotate(43deg); }
+ .progress-circle.p13 .value-bar { transform: rotate(47deg); }
+ .progress-circle.p14 .value-bar { transform: rotate(50deg); }
+ .progress-circle.p15 .value-bar { transform: rotate(54deg); }
+ .progress-circle.p16 .value-bar { transform: rotate(58deg); }
+ .progress-circle.p17 .value-bar { transform: rotate(61deg); }
+ .progress-circle.p18 .value-bar { transform: rotate(65deg); }
+ .progress-circle.p19 .value-bar { transform: rotate(68deg); }
+ .progress-circle.p20 .value-bar { transform: rotate(72deg); }
+ .progress-circle.p21 .value-bar { transform: rotate(76deg); }
+ .progress-circle.p22 .value-bar { transform: rotate(79deg); }
+ .progress-circle.p23 .value-bar { transform: rotate(83deg); }
+ .progress-circle.p24 .value-bar { transform: rotate(86deg); }
+ .progress-circle.p25 .value-bar { transform: rotate(90deg); }
+ .progress-circle.p26 .value-bar { transform: rotate(94deg); }
+ .progress-circle.p27 .value-bar { transform: rotate(97deg); }
+ .progress-circle.p28 .value-bar { transform: rotate(101deg); }
+ .progress-circle.p29 .value-bar { transform: rotate(104deg); }
+ .progress-circle.p30 .value-bar { transform: rotate(108deg); }
+ .progress-circle.p31 .value-bar { transform: rotate(112deg); }
+ .progress-circle.p32 .value-bar { transform: rotate(115deg); }
+ .progress-circle.p33 .value-bar { transform: rotate(119deg); }
+ .progress-circle.p34 .value-bar { transform: rotate(122deg); }
+ .progress-circle.p35 .value-bar { transform: rotate(126deg); }
+ .progress-circle.p36 .value-bar { transform: rotate(130deg); }
+ .progress-circle.p37 .value-bar { transform: rotate(133deg); }
+ .progress-circle.p38 .value-bar { transform: rotate(137deg); }
+ .progress-circle.p39 .value-bar { transform: rotate(140deg); }
+ .progress-circle.p40 .value-bar { transform: rotate(144deg); }
+ .progress-circle.p41 .value-bar { transform: rotate(148deg); }
+ .progress-circle.p42 .value-bar { transform: rotate(151deg); }
+ .progress-circle.p43 .value-bar { transform: rotate(155deg); }
+ .progress-circle.p44 .value-bar { transform: rotate(158deg); }
+ .progress-circle.p45 .value-bar { transform: rotate(162deg); }
+ .progress-circle.p46 .value-bar { transform: rotate(166deg); }
+ .progress-circle.p47 .value-bar { transform: rotate(169deg); }
+ .progress-circle.p48 .value-bar { transform: rotate(173deg); }
+ .progress-circle.p49 .value-bar { transform: rotate(176deg); }
+ .progress-circle.p50 .value-bar { transform: rotate(180deg); }
+ .progress-circle.p51 .value-bar { transform: rotate(184deg); }
+ .progress-circle.p52 .value-bar { transform: rotate(187deg); }
+ .progress-circle.p53 .value-bar { transform: rotate(191deg); }
+ .progress-circle.p54 .value-bar { transform: rotate(194deg); }
+ .progress-circle.p55 .value-bar { transform: rotate(198deg); }
+ .progress-circle.p56 .value-bar { transform: rotate(202deg); }
+ .progress-circle.p57 .value-bar { transform: rotate(205deg); }
+ .progress-circle.p58 .value-bar { transform: rotate(209deg); }
+ .progress-circle.p59 .value-bar { transform: rotate(212deg); }
+ .progress-circle.p60 .value-bar { transform: rotate(216deg); }
+ .progress-circle.p61 .value-bar { transform: rotate(220deg); }
+ .progress-circle.p62 .value-bar { transform: rotate(223deg); }
+ .progress-circle.p63 .value-bar { transform: rotate(227deg); }
+ .progress-circle.p64 .value-bar { transform: rotate(230deg); }
+ .progress-circle.p65 .value-bar { transform: rotate(234deg); }
+ .progress-circle.p66 .value-bar { transform: rotate(238deg); }
+ .progress-circle.p67 .value-bar { transform: rotate(241deg); }
+ .progress-circle.p68 .value-bar { transform: rotate(245deg); }
+ .progress-circle.p69 .value-bar { transform: rotate(248deg); }
+ .progress-circle.p70 .value-bar { transform: rotate(252deg); }
+ .progress-circle.p71 .value-bar { transform: rotate(256deg); }
+ .progress-circle.p72 .value-bar { transform: rotate(259deg); }
+ .progress-circle.p73 .value-bar { transform: rotate(263deg); }
+ .progress-circle.p74 .value-bar { transform: rotate(266deg); }
+ .progress-circle.p75 .value-bar { transform: rotate(270deg); }
+ .progress-circle.p76 .value-bar { transform: rotate(274deg); }
+ .progress-circle.p77 .value-bar { transform: rotate(277deg); }
+ .progress-circle.p78 .value-bar { transform: rotate(281deg); }
+ .progress-circle.p79 .value-bar { transform: rotate(284deg); }
+ .progress-circle.p80 .value-bar { transform: rotate(288deg); }
+ .progress-circle.p81 .value-bar { transform: rotate(292deg); }
+ .progress-circle.p82 .value-bar { transform: rotate(295deg); }
+ .progress-circle.p83 .value-bar { transform: rotate(299deg); }
+ .progress-circle.p84 .value-bar { transform: rotate(302deg); }
+ .progress-circle.p85 .value-bar { transform: rotate(306deg); }
+ .progress-circle.p86 .value-bar { transform: rotate(310deg); }
+ .progress-circle.p87 .value-bar { transform: rotate(313deg); }
+ .progress-circle.p88 .value-bar { transform: rotate(317deg); }
+ .progress-circle.p89 .value-bar { transform: rotate(320deg); }
+ .progress-circle.p90 .value-bar { transform: rotate(324deg); }
+ .progress-circle.p91 .value-bar { transform: rotate(328deg); }
+ .progress-circle.p92 .value-bar { transform: rotate(331deg); }
+ .progress-circle.p93 .value-bar { transform: rotate(335deg); }
+ .progress-circle.p94 .value-bar { transform: rotate(338deg); }
+ .progress-circle.p95 .value-bar { transform: rotate(342deg); }
+ .progress-circle.p96 .value-bar { transform: rotate(346deg); }
+ .progress-circle.p97 .value-bar { transform: rotate(349deg); }
+ .progress-circle.p98 .value-bar { transform: rotate(353deg); }
+ .progress-circle.p99 .value-bar { transform: rotate(356deg); }
+ .progress-circle.p100 .value-bar { transform: rotate(360deg); }

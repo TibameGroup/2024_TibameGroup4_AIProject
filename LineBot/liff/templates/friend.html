@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>正在進行好友連接...</title>
+  <style>
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.18.2/sdk.js"></script>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <script> 
+    async function initializeLiff(myLiffId) {
+      try {
+        await liff.init({liffId: myLiffId});
+        if (!liff.isLoggedIn()) {
+            await liff.login(); // 等待登入完成
+            return;
+        }
+        scanQR();
+      } catch (err) {
+        console.error('初始化 LIFF 時發生錯誤:', err);
+      }
+    }
+
+    async function scanQR() {
+      try {
+        const result = await liff.scanCodeV2();
+        if (result.value != null && result.value != undefined && result.value != 'None')  {
+          // sendQrCodeValueToBackend(result.value);
+          user(result.value);
+          // sendMessage();
+        }
+      } catch (error) {
+        console.error('掃描 QR Code 時發生錯誤:', error);
+      }
+    }
+
+    async function sendQrCodeValueToBackend(qrCodeValue) {
+      try {
+        const response = await fetch("/friend/QRCode", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ qrcodeValue }),
+        });
+      } catch (error) {
+        console.error('發送 QR Code 值到後端時發生錯誤:', error);
+      }
+    }
+
+    async function user(friendId) {
+      try {
+        const profile = await liff.getProfile();
+        const { userId, displayName } = profile;
+        const response = await fetch("/friend/QRCode", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ myId: userId, myName: displayName, friendId }),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          
+          if (result.message === 'Already friends!') {
+            Swal.fire({
+                title: '錯誤',
+                text: '已經為好友！',
+                icon: 'error',
+            }).then(() => {
+                window.close(); 
+            });
+          } else if (result.message === 'User not in Mongo!') {
+            Swal.fire({
+                title: '錯誤',
+                text: '請掃取正確的好友條碼！',
+                icon: 'error',
+            }).then(() => {
+                window.close(); 
+            });
+          } else {
+            Swal.fire({
+                title: '成功',
+                text: '掃描完成！',
+                icon: 'success',
+            }).then(() => {
+                sendMessage();
+                window.close(); 
+            });
+          }
+        } else {
+            Swal.fire({
+                title: '錯誤',
+                text: '提交失敗，請稍後重試！',
+                icon: 'error',
+            });
+        }
+      } catch (error) {
+        console.error('Error getting LINE profile:', error);
+      }
+    }
+
+    async function sendMessage() {
+      try {
+        const response = await liff.sendMessages([
+          {
+            type: 'text',
+            text: '等待好友確認中。'
+          }
+        ]);
+      } catch (error) {
+        console.error('Error sending message from LIFF:', error);
+      }  
+    }  
+    
+    initializeLiff("{{friendLiffID}}");
+  </script>
+</body>
+</html>

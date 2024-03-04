@@ -1,0 +1,25 @@
+database: Official
+table: products
+
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| CMNO         | varchar(20)  | NO   | PRI | NULL    |       |
+| PRODNAME     | varchar(30)  | NO   |     | NULL    |       |
+| level        | varchar(5)   | YES  |     | NULL    |       |
+| G_ML_NUM     | decimal(6,1) | YES  |     | NULL    |       |
+| G_ML         | varchar(10)  | YES  |     | NULL    |       |
+| UNIT         | decimal(6,1) | YES  |     | NULL    |       |
+| HEAT         | decimal(6,1) | YES  |     | NULL    |       |
+| PROTEIN      | decimal(6,1) | YES  |     | NULL    |       |
+| TOTALFAT     | decimal(6,1) | YES  |     | NULL    |       |
+| SATFAT       | decimal(6,1) | YES  |     | NULL    |       |
+| TRANSFAT     | decimal(6,1) | YES  |     | NULL    |       |
+| CARBOHYDRATE | decimal(6,1) | YES  |     | NULL    |       |
+| SUGAR        | decimal(6,1) | YES  |     | NULL    |       |
+| SODIUM       | decimal(6,1) | YES  |     | NULL    |       |
+| barcode      | varchar(20)  | YES  | UNI | NULL    |       |
+| url          | varchar(60)  | YES  | UNI | NULL    |       |
+| name         | varchar(5)   | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+17 rows in set (0.00 sec)
