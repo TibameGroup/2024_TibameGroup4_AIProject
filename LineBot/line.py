@@ -35,8 +35,8 @@ import asyncio
 from modules.LineMessageHandle import Handle, InvalidSignatureError, deletePhotos
 from modules.LineMessage import Flex, textMessage, QuickReply
 from modules.menu import Menu
-from modules.diaryMessage import DiaryFlex
 # from modules.menu_vision1 import Menu, Menu_img
+from modules.diaryMessage import DiaryFlex
 from models.gemini import geminiCalEnergy
 from models.scanBarcode import scanBarcode
 from models.CnnModel import cnnModel
@@ -46,7 +46,7 @@ from dbs.mongo import Mongo
 
 # HTML
 from liff.friend import friend_app as friend_blueprint
-from liff.nutritionValue2 import Values_app as Values_blueprint
+from liff.nutritionValue import Values_app as Values_blueprint
 from liff.diary import dairy_app as diary_blueprint
 
 # barcodeInsert
@@ -86,7 +86,7 @@ mongoConn = Mongo()
 sql = Sql()
 sqlConn = sql.connectSql()
 
-# Menu 設定
+# # Menu 設定
 # # 刪全部Menu
 # for id in menu.getRichMenusId():
 #     menu.delRichMenu(id['richMenuId'])
@@ -94,9 +94,9 @@ sqlConn = sql.connectSql()
 # menu.deleteRichMenuAlias("a_alias_id")
 # menu.deleteRichMenuAlias("m_alias_id")
 # menu.deleteRichMenuAlias("b_alias_id")
-# menus = menu.getMenuIdAlias()
-# for m in menus:
-#     menu.delRichMenu(m['richMenuId'])
+# # menus = menu.getMenuIdAlias()
+# # for m in menus:
+# #     menu.delRichMenu(m['richMenuId'])
 #     # menu.deleteRichMenuAlias(m['name'])
 # # # 設定預設Menu，只需執行一次
 # menu.setDefaultMenu() 
@@ -236,6 +236,9 @@ def handlePostback(events):
     elif action == "noinsertNutri": # 條碼查詢 > 不存在商品 > 不填寫營養資料
         messages = [textMessage(f"已取消填寫營養資料。")]
         replyMessage(replyToken, messages)
+        data = {'MenuStage': {'Status': None, 'BarcodeValue': None, 'HeatCalInfo': None}}
+        mongoConn.updateDatas(userId=userId, collectionName="UserDatas", data=data)
+        deletePhotos(f"./image/yoloImg/{userId}.jpg") # 刪除圖片
     
     elif action == "dietRecordMore": # 飲食日記 > more
         searchDATETIME = data['DATETIME']
@@ -265,7 +268,6 @@ def handlePostback(events):
         messages = [textMessage("請輸入飲食名稱。")]
         replyMessage(replyToken, messages)
     # elif action == "nextPage": # 好友查看按鍵
-    #     start = time.time()
     #     menus = menu.getRichMenusId() # 全部的menuList內容
     #     menuId = menu.getRichMenuIdByName(menus, menuName=userId)
     #     if menuId:
@@ -274,14 +276,12 @@ def handlePostback(events):
     #         # 生成menu
     #         Menu_img().img_process(userId)
     #         menu.setNextMenu(menuName=userId, menuImagePath=f'./image/menuImg/vision1_b_left_{userId}.jpg')
-    #     end = time.time()
-    #     print("生成Menu圖片: ", end - start)
     # elif action == "prevPage": # 返回主 Menu
     #     deletePhotos(f'./image/menuImg/vision1_b_left_{userId}.jpg')
-    #     # # 刪除 menu
-    #     # menus = menu.getRichMenusId() # 全部的menuList內容
-    #     # menuId = menu.getRichMenuIdByName(menus, menuName=userId)
-    #     # menu.delRichMenu(menuId)
+    #     # 刪除 menu
+    #     menus = menu.getRichMenusId() # 全部的menuList內容
+    #     menuId = menu.getRichMenuIdByName(menus, menuName=userId)
+    #     menu.delRichMenu(menuId)
 
     ############ 測試人員區 #####################
     elif action == "insertBarcode": # 新增條碼資料
@@ -308,7 +308,6 @@ def handlePostback(events):
         replyMessage(replyToken, messages)
         data = {'MenuStage': {'Status': None, 'BarcodeValue': None, 'HeatCalInfo': None}}
         mongoConn.updateDatas(userId=userId, collectionName="UserDatas", data=data)
-        deletePhotos(f"./image/yoloImg/{userId}.jpg") # 刪除圖片
     elif action == "exitCheck":
         messages = [textMessage("結束檢查。")] 
         replyMessage(replyToken, messages)

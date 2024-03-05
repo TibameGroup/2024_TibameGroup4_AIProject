@@ -1,3 +1,4 @@
+import math
 def calculate_nutrition(height, weight, age, gender, activity_level, workout):
     # 營養需求基準值，單位為卡路里
     calorie_needs = 0
@@ -43,10 +44,10 @@ def calculate_nutrition(height, weight, age, gender, activity_level, workout):
         protein_needs = weight * 1.2  # 建議攝取的蛋白質為體重的 1.2 克/公斤 每克蛋白質約含有 4 卡路里
         carbohydrate_needs = calorie_needs * 0.55 / 4  # 建議攝取的碳水化合物為總熱量的 55%，每克碳水化合物約含有 4 卡路里
         fat_needs = calorie_needs * 0.3 / 9  # 建議攝取的脂肪為總熱量的 30%，每克脂肪約含有 9 卡路里
-    calorie_needs = round(calorie_needs, 1)
-    protein_needs = round(protein_needs, 1)
-    carbohydrate_needs = round(carbohydrate_needs,1)
-    fat_needs = round(fat_needs, 1)
+    calorie_needs = math.ceil(calorie_needs)
+    protein_needs = math.ceil(protein_needs)
+    carbohydrate_needs = math.ceil(carbohydrate_needs)
+    fat_needs = math.ceil(fat_needs)
     # 將計算結果以字典形式返回
     nutrition_dict = {
         '熱量': calorie_needs,
