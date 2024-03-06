@@ -20,7 +20,7 @@ async def cnnModel(imgPath, width=320, height=320):
     # 轉換為 NumPy 數組
     resized_image = np.array(resized_image)
     
-    data = {"instances": [{"input_21": resized_image.tolist()}]}
+    data = {"instances": [{"input_2": resized_image.tolist()}]}
     
     # 查看回傳資料
     # 非同步
