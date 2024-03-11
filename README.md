@@ -10,10 +10,10 @@
 ### 工作分配
 |人員|建立數據集|建立資料庫|架設雲端|建立模型|LINE BOT|
 |:--------:|:--------:|:----------:|:--------:|:----------:|:------------:|
-|劉承樺|拍照|Nutri-Score計算| |CNN| |
-|陳昱綸|拍照| | |YOLO v8<br>Google Vision OCR |
-|康宗良|拍照|MySQL|GCP| |LIFF|
-|魏良育|拍照|MongoDB| | |LINE BOT|
-|詹晏怡|拍照|Selenium爬蟲| | |LIFF|
-|鄧福瑞|拍照|BMR計算| |Gemini| |
-|游亞璇|拍照| | | | |
+|劉承樺|V|Nutri-Score計算| |CNN| |
+|陳昱綸|V| | |YOLO v8<br>Google Vision OCR |
+|康宗良|V|MySQL|GCP| |LIFF|
+|魏良育|V|MongoDB| | |VVV|
+|詹晏怡|V|Selenium爬蟲| | |LIFF|
+|鄧福瑞|V|BMR計算| |Gemini| |
+|游亞璇|V| | | | |
