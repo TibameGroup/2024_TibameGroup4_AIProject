@@ -2,8 +2,8 @@
 **/Pipfile
 LineBot/ngrok/
 LineBot/待處理/
-LineBot/config/config.json
 LineBot/config/configCloud.json
 LineBot/config/testPersonId.json
-Yolo_OCR/Flask/googleVisionOCRKey.json
 Database/MySQL/backup*.sql
+PPT/CHI102_專題第4組_花椰椰營養管家_報告影片.mp4
+PPT/CHI102_專題第4組_花椰椰營養管家_功能Demo影片.mp4

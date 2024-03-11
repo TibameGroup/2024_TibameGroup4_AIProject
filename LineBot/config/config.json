@@ -1,0 +1,28 @@
+{
+    "ChannelAccessToken": "",
+    "ChannelSecret": "",
+    "EndPoint": "https://...輸入CloudRun網址",
+
+    "friendLiffUrl": "https://liff.line.me/...",
+    "friendLiffID": "",
+    "YoloLiffID": "",
+    "YoloLiffUrl": "https://liff.line.me/...",
+    "diaryLiffID": "",
+    "diaryLiffUrl": "https://liff.line.me/...",
+
+    "SQLhost": "",
+    "SQLuser":  "",
+    "SQLpassword": "",
+    "SQLdatabase": "",
+    "SQLport": 3306,
+
+    "MongoHost": "",
+    "MongoPort": "27017",
+    "MongoUser": "",
+    "MongoPassword": "",
+    "MongoDatabase": "",
+
+    "CnnModelURL": "https://.../v1/models/my_model/versions/1:predict",
+    "YoloOcrURL": "http://...:5000/upload",
+    "GeminiKey": ""
+}
