@@ -11,6 +11,12 @@ Demo影片：<br>
     https://www.youtube.com/watch?v=Cl5B_yQ_LdI<br>
 技術手冊(Notion)：尚有區域未編寫完成<br>
     https://www.notion.so/ae9181c9fd1a4dbeb92e50dff2f947f6<br>
+Hint：<br>
+    移植程式需更動部分<br>
+    1. LineBot/config/config.json <br>
+    2. Yolo_OCR/Flask/googleVisionOCRKey.json <br>
+    googleVisionOCRKey.json 需自行申請GCP OCR Key <br>
+    GeminiKey 需自行申請API Key<br>
 
 ### 工作分配
 |人員|建立數據集|建立資料庫|架設雲端|建立模型|LINE BOT|
