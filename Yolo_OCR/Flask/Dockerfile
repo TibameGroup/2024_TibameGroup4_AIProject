@@ -4,7 +4,7 @@ COPY  .  /yolo/
 RUN  apt-get update\
       && apt-get install -y build-essential\
       && pip install --upgrade pip\
-     && pip install uwsgi\
-     && pip install -r requirements.txt 
+      && pip install uwsgi\
+      && pip install -r requirements.txt 
 
 CMD ["sh", "-c","uwsgi -w app:app --http-socket :$PORT --threads 5"]
