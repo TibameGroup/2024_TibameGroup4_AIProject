@@ -9,12 +9,16 @@
 
 Demo影片：<br>
     https://www.youtube.com/watch?v=Cl5B_yQ_LdI<br>
+報告影片：<br>
+    https://youtu.be/48yMgySnZNQ<br>
 技術手冊(Notion)：尚有區域未編寫完成<br>
     https://www.notion.so/ae9181c9fd1a4dbeb92e50dff2f947f6<br>
+
 Hint：<br>
     移植程式需更動部分<br>
     1. LineBot/config/config.json <br>
-    2. Yolo_OCR/Flask/googleVisionOCRKey.json <br>
+    2. LineBot/config/testPersonId.json <br>
+    3. Yolo_OCR/Flask/googleVisionOCRKey.json <br>
     googleVisionOCRKey.json 需自行申請GCP OCR Key <br>
     GeminiKey 需自行申請API Key<br>
 
